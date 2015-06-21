@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">Compose Monkey</h1>
-                        <p class="intro-text">Adding chaos to Compose orchestration<br>Created at the DockerCon Hackathon.</p>
+                        <p class="intro-text">Adding chaos to Compose orchestration<br>Created at the DockerCon Hackathon'15.</p>
                         <div class="dropdown" id="configDropdown">
                           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Active Links
@@ -115,7 +115,7 @@
                         <button type="submit" class="btn btn-default">Submit</button>
                       </form>
                       <a href="#page-top" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
+                            <i class="fa fa-angle-double-up animated"></i>
                       </a>
             </div>
         </div>
@@ -164,24 +164,20 @@
     <script>
 
         $(document).ready(function () {
-                $.get( "http://localhost:8080/proxies/index", function( data ) {
-                    console.log('hi');
+                $.get( "http://dockercon.prat0318.me:8080/proxies/index", function( data ) {
+                    data = JSON.parse(data);
                     console.log(data);
-                    }).done(function() {
-                            alert( "second success" );
-                              })
-                  .fail(function(e) {
-                          console.log( e );
-                            });
-            var result = ['web -> redis', 'web -> mysql'];
-            var options = $("#linkid");
-            $.each(result, function(idx) {
-                    options.append('<li><a href="#config">' + result[idx] + '</a></li>');
+                    var options = $("#linkid");
+                    $.each(data, function(idx) {
+                        var arr = data[idx].split(':');
+                        var id = arr[0] + '_' + arr[1] + arr[2] + '_1';
+                        var show = arr[1] + ' -> ' + arr[2];
+                        options.append('<li><a href="#config" val="' + id + '">' + show + '</a></li>');
                     });
-           $("#configDropdown ul  li").click(function (e) {
-               console.log(e.target.innerHTML);
-             console.log($('#configDropdown ul li a.active'));
-           });
+                    $("#configDropdown ul  li").click(function (e) {
+                       console.log($(e.target).attr('val'));
+                    });
+                });
         });
 
 
