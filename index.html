@@ -148,7 +148,8 @@
     <script>
 
         $(document).ready(function () {
-           $("#configDropdown ul  li").click(function () {
+           $("#configDropdown ul  li").click(function (e) {
+               console.log(e.target.innerHTML);
              console.log($('#configDropdown ul li a.active'));
            });
         });
