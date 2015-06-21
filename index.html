@@ -92,6 +92,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <p> Currently Selected link: <span id="fill">None</span></p>
+                <p> Current Behavior of link: <span id="fillb">None</span></p>
                       <form class="navbar-form" role="search">
                         <div class="form-group">
                             <div class="dropdown">
@@ -176,9 +177,14 @@
                         options.append('<li><a href="#config" val="' + id + '">' + show + '</a></li>');
                     });
                     $("#configDropdown ul  li").click(function (e) {
-                        console.log(e.target.innerHTML);
                        $('#fill').html(e.target.innerHTML);
-                       console.log($(e.target).attr('val'));
+                       $('#submit').removeAttr('disabled')
+                       var proxy = $(e.target).attr('val');
+                        $.get( "http://dockercon.prat0318.me:8080/proxies?proxy=" + proxy, function( data ) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            $('#fillb').html(data.behavior);
+                        });
                     });
                 });
         });
